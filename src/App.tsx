@@ -25,6 +25,7 @@ export default function App() {
     if (inputValue.trim() === '') return
 
     const priority = priorityValue.trim() === '' ? 'средний' : priorityValue
+
     const newTask: Task = {
       id: Date.now(),
       title: inputValue,
@@ -79,48 +80,54 @@ export default function App() {
   })
 
   return (
-    <div>
-      <h1>Мои задачи</h1>
-      <div>
-        <button onClick={() => setFilter('all')}>Все</button>
-        <button onClick={() => setFilter('active')}>Активные</button>
-        <button onClick={() => setFilter('done')}>Выполнены</button>
+    <div className="min-h-screen bg-gray-100 flex justify-center pt-14">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Мои задачи</h1>
+        <div className="flex gap-2">
+          <button
+           onClick={() => setFilter('all')}
+           className="{``}"
+           >Все</button>
+          <button onClick={() => setFilter('active')}>Активные</button>
+          <button onClick={() => setFilter('done')}>Выполнены</button>
+        </div>
+        <ul>
+          {filteredTasks.map((task) => (
+            <TodoItem
+              key={task.id}
+              task={task}
+              editingId={editingId}
+              editingValue={editingValue}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+              onSave={handleSave}
+              setEditingValue={setEditingValue}
+            />
+          ))}
+        </ul>
+        <input
+          type="text"
+          placeholder="Задача"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleAdd();
+          }}
+        />
+
+        <input
+          type="text"
+          placeholder="Приоритет"
+          value={priorityValue}
+          onChange={(e) => setPriorityValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleAdd();
+          }}
+        />
+
+        <button onClick={handleAdd} className="bg-blue-500">Добавить задачу</button>
       </div>
-      <ul>
-        {filteredTasks.map((task) => (
-          <TodoItem
-            task={task}
-            editingId={editingId}
-            editingValue={editingValue}
-            onToggle={handleToggle}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-            onSave={handleSave}
-            setEditingValue={setEditingValue}
-          />
-        ))}
-      </ul>
-      <input
-        type="text"
-        placeholder="Задача"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') handleAdd();
-        }}
-      />
-
-      <input
-        type="text"
-        placeholder="Приоритет"
-        value={priorityValue}
-        onChange={(e) => setPriorityValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') handleAdd();
-        }}
-      />
-
-      <button onClick={handleAdd}>Добавить задачу</button>
     </div>
   )
 }

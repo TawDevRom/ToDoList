@@ -12,7 +12,7 @@ type TodoItemProps = {
 export function TodoItem({ task, editingId, editingValue,
     onToggle, onDelete, onEdit, onSave, setEditingValue }: TodoItemProps) {
     return (
-        <li key={task.id}>
+        <li>
             <input
                 type="checkbox"
                 checked={task.done}
