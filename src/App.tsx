@@ -82,14 +82,18 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center pt-14">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Мои задачи</h1>
-        <div className="flex gap-2">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Мои задачи</h1>
+        <div className="flex gap-2 my-5">
           <button
-           onClick={() => setFilter('all')}
-           className="{``}"
-           >Все</button>
-          <button onClick={() => setFilter('active')}>Активные</button>
-          <button onClick={() => setFilter('done')}>Выполнены</button>
+            onClick={() => setFilter('all')}
+            className={`rounded-full font-medium px-2.5 py-1.5 transition-colors ${filter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+          >Все</button>
+          <button
+            className={`rounded-full font-medium px-2.5 py-1.5 transition-colors ${filter === 'active' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            onClick={() => setFilter('active')}>Активные</button>
+          <button
+            className={`rounded-full font-medium px-2.5 py-1.5 transition-colors ${filter === 'done' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            onClick={() => setFilter('done')}>Выполнены</button>
         </div>
         <ul>
           {filteredTasks.map((task) => (
@@ -106,27 +110,31 @@ export default function App() {
             />
           ))}
         </ul>
-        <input
-          type="text"
-          placeholder="Задача"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleAdd();
-          }}
-        />
+        <div className="flex flex-col gap-1 mt-5">
+          <input
+            type="text"
+            placeholder="Задача"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleAdd();
+            }}
+            className="border border-gray-300 rounded-lg px-3 py-1 text-sm outline-none focus:border-blue-400 transition-colors"
+          />
 
-        <input
-          type="text"
-          placeholder="Приоритет"
-          value={priorityValue}
-          onChange={(e) => setPriorityValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleAdd();
-          }}
-        />
+          <input
+            type="text"
+            placeholder="Приоритет"
+            value={priorityValue}
+            onChange={(e) => setPriorityValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleAdd();
+            }}
+            className="border border-gray-300 rounded-lg px-3 py-1 text-sm outline-none focus:border-blue-400 transition-colors"
+          />
 
-        <button onClick={handleAdd} className="bg-blue-500">Добавить задачу</button>
+          <button onClick={handleAdd} className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-lg transition-colors">Добавить задачу</button>
+        </div>
       </div>
     </div>
   )
